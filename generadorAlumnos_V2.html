@@ -106,7 +106,7 @@ function generar() {
         var alumnosSQL = "";
         var matricula = 222217412;
         for (let i = 1; i < (num + 1); i++) {
-            alumnosSQL += "INSERT INTO estudiantes (Expediente, Apellido1, Apellido2, Nombre, Correo_ins) VALUES (" +
+            alumnosSQL += "INSERT INTO alumnos (Expediente, Apellido1, Apellido2, Nombre, Correo_ins) VALUES (" +
                 matricula + ", '" +
                 apellidosEspanoles[Math.floor(Math.random() * 199)] + "', '" +
                 apellidosPortugueses[Math.floor(Math.random() * 199)] + "', '" +
