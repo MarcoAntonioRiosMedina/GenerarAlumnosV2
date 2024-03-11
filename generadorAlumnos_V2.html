@@ -170,11 +170,62 @@ function generar() {
     		archivo.click();
     		document.body.removeChild(archivo);
 			}
+
+            function generarJSON() {
+    var opcion = document.getElementById("opcion").value;
+    var num = parseInt(document.getElementById("num").value);
+    var alumnosArray = [];
+    var matricula = 222217412;
+    for (let i = 1; i < (num + 1); i++) {
+        var alumno = {
+            Expediente: matricula,
+            Apellido1: apellidosEspanoles[Math.floor(Math.random() * 199)],
+            Apellido2: apellidosPortugueses[Math.floor(Math.random() * 199)],
+            Nombre: nombres[Math.floor(Math.random() * 220)] + " " + nombres2[Math.floor(Math.random() * 209)],
+            Correo_ins: matricula++ + "@universidad.mx"
+        };
+        alumnosArray.push(alumno);
+    }
+    var alumnosJSON = JSON.stringify(alumnosArray, null, 2);
+    descargarArchivo(alumnosJSON, "universidad.json");
+}
+
+function generarCSV() {
+    var opcion = document.getElementById("opcion").value;
+    var num = parseInt(document.getElementById("num").value);
+    var alumnosCSV = "Expediente,Apellido1,Apellido2,Nombre,Correo_ins\n";
+    var matricula = 222217412;
+    for (let i = 1; i < (num + 1); i++) {
+        alumnosCSV += (matricula) + "," +
+            (apellidosEspanoles[Math.floor(Math.random() * 199)]) + "," +
+            (apellidosPortugueses[Math.floor(Math.random() * 199)]) + "," +
+            (nombres[Math.floor(Math.random() * 220)]) + " " +
+            (nombres2[Math.floor(Math.random() * 209)]) + "," +
+            (matricula++) + "@universidad.mx";
+        if (i !== num) {
+            alumnosCSV += "\n";
+        }
+    }
+    descargarArchivo(alumnosCSV, "universidad.csv");
+}
+
+function descargarArchivo(data, filename) {
+    var archivo = document.createElement('a');
+    archivo.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+    archivo.setAttribute('download', filename);
+    archivo.style.display = 'none';
+    document.body.appendChild(archivo);
+    archivo.click();
+    document.body.removeChild(archivo);
+}
+
 		</script>
 	</head>
 	<body>
 		<input type="button" value="Generar alumnos" onclick="generar()">
 <input type="button" value="Generar SQL" onclick="generarSQL()">
+<input type="button" value="Generar JSON" onclick="generarJSON()">
+<input type="button" value="Generar CSV" onclick="generarCSV()">
 <input type="number" id="num" placeholder="Numero de entradas" value="5">
 <select id="opcion" name="opcion">
     <option value="sql">SQL</option>
