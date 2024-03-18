@@ -103,21 +103,27 @@ function generar() {
         document.getElementById("num").value = 5;
     }
     if (opcion == "sql") {
-        var alumnosSQL = "";
-        var matricula = 222217412;
-        for (let i = 1; i < (num + 1); i++) {
-            alumnosSQL += "INSERT INTO alumnos (Expediente, Apellido1, Apellido2, Nombre, Correo_ins) VALUES (" +
-                matricula + ", '" +
-                apellidosEspanoles[Math.floor(Math.random() * 199)] + "', '" +
-                apellidosPortugueses[Math.floor(Math.random() * 199)] + "', '" +
-                nombres[Math.floor(Math.random() * 220)] + " " +
-                nombres2[Math.floor(Math.random() * 209)] + "', '" +
-                (matricula++) + "@universidad.mx');\n";
+    var alumnosSQL = "INSERT INTO alumnos (Expediente, Apellido1, Apellido2, Nombre, Correo_ins) VALUES ";
+    var matriculaInicial = 222217550;
+
+    for (let i = 0; i < num; i++) {
+        var matricula = matriculaInicial + i;
+        var apellido1 = apellidosEspanoles[Math.floor(Math.random() * 199)];
+        var apellido2 = apellidosPortugueses[Math.floor(Math.random() * 199)];
+        var nombre = nombres[Math.floor(Math.random() * 220)] + " " + nombres2[Math.floor(Math.random() * 209)];
+        var correo = matricula + "@universidad.mx";
+
+        alumnosSQL += "(" + matricula + ", '" + apellido1 + "', '" + apellido2 + "', '" + nombre + "', '" + correo + "')";
+        if (i < num - 1) {
+            alumnosSQL += ", ";
         }
-        document.getElementById("salida").innerText = alumnosSQL;
-    } else if (opcion == "csv") {
+    }
+
+    document.getElementById("salida").innerText = alumnosSQL + ";";
+}
+     else if (opcion == "csv") {
         var alumnos = "Expediente,Apellido1,Apellido2,Nombre,Correo_ins\n";
-        var matricula = 222217412;
+        var matricula = 222217550;
         for (let i = 1; i < (num + 1); i++) {
             alumnos += (matricula) + "," +
                 (apellidosEspanoles[Math.floor(Math.random() * 199)]) + "," +
@@ -132,7 +138,7 @@ function generar() {
         document.getElementById("salida").innerText = alumnos;
     } else if (opcion == "json") {
         var alumnosArray = [];
-        var matricula = 222217412;
+        var matricula = 222217550;
         for (let i = 1; i < (num + 1); i++) {
             var alumno = {
                 Expediente: matricula,
@@ -175,7 +181,7 @@ function generar() {
     var opcion = document.getElementById("opcion").value;
     var num = parseInt(document.getElementById("num").value);
     var alumnosArray = [];
-    var matricula = 222217412;
+    var matricula = 222217550;
     for (let i = 1; i < (num + 1); i++) {
         var alumno = {
             Expediente: matricula,
@@ -194,7 +200,7 @@ function generarCSV() {
     var opcion = document.getElementById("opcion").value;
     var num = parseInt(document.getElementById("num").value);
     var alumnosCSV = "Expediente,Apellido1,Apellido2,Nombre,Correo_ins\n";
-    var matricula = 222217412;
+    var matricula = 222217550;
     for (let i = 1; i < (num + 1); i++) {
         alumnosCSV += (matricula) + "," +
             (apellidosEspanoles[Math.floor(Math.random() * 199)]) + "," +
